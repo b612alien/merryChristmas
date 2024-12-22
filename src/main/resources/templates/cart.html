@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니</title>
+    <style>
+        .cart-item{
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+        }
+        .cart-empty{
+            margin: 10px;
+            color: gray;
+        }
+        .buttons-container{
+            text-align: center;
+            margin: 20px;
+        }
+        .buttons{
+            padding: 5px 10px;
+            color: #4CAF50;
+            border: none;
+            cursor: pointer;
+        }
+        .order-button{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>장바구니</h1>
+
+<!-- 장바구니가 비어있을 때 -->
+<div th:if="${cartItems.isEmpty()}" class="cart-empty">
+    장바구니가 비어있습니다.
+</div>
+
+<!-- 장바구니 상품 목록 -->
+<div th:unless="${cartItems.isEmpty()}">
+    <div th:each="item : ${cartItems}" class="cart-item">
+        상품: <span th:text="${item.product.name}"></span><br>
+        가격: <span th:text="${item.product.price}">0</span>원<br>
+        수량: <span th:text="${item.quantity}">0</span>개<br>
+        <a th:href="@{/cart/remove/{id}(id=${item.id})}">삭제하기</a>
+        <hr>
+    </div>
+
+    <!-- 주문하기 -->
+    <form th:action="@{/order}" class="order-button" method="post">
+        <input type="hidden" name="username" th:value="${username}">
+        <button type="submit">주문하기</button>
+    </form>
+</div>
+
+<div class="buttons-container">
+    <div class="buttons">
+        <a href="/products">쇼핑 계속하기</a>
+    </div>
+    <div class="buttons">
+        <a href="/">홈으로 돌아가기</a>
+    </div>
+</div>
+</body>
+</html>

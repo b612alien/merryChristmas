@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <style>
+        body{
+            margin: 20px;
+        }
+        .search-box{
+            margin: 20px 0;
+            padding: 10px;
+            text-align: center;
+        }
+        .search-box input{
+            padding: 5px;
+            width: 200px;
+        }
+        .search-box button{
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .product-container{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-item{
+            border: 1px solid #4CAF50;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        .product-item h3{
+            color: #121212;
+            margin: 10px 0;
+        }
+        .product-item p{
+            color: gray;
+            margin: 10px 0;
+        }
+        .product-item a{
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        .no-products{
+            text-align: center;
+            color: gray;
+            margin: 20px;
+        }
+        .home-link{
+            margin: 20px;
+            text-align: center;
+        }
+        .home-link a{
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align: center;">크리스마스 상품 목록</h1>
+
+<div class="search-box">
+    <form action="/products" method="get">
+        <input type="text" name="keyword" placeholder="상품 이름으로 검색">
+        <button type="submit">검색</button>
+    </form>
+</div>
+
+<div th:if="${products.isEmpty()}" class="no-products">
+    검색 결과가 없습니다.
+</div>
+
+<div class="product-container">
+    <div th:each="product : ${products}" class="product-item">
+        <h3 th:text="${product.name}">상품명</h3>
+        <p th:text="${product.price + '원'}">가격</p>
+        <a th:href="@{/products/{id}(id=${product.id})}">자세히 보기</a>
+    </div>
+</div>
+
+<div class="home-link">
+    <a href="/">홈으로 돌아가기</a>
+</div>
+</body>
+</html>

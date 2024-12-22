@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Christmas Shop</title>
+  <style>
+    h1{
+      color: #4CAF50;
+    }
+    .nav-links{
+      margin: 20px 0;
+    }
+    .nav-links a{
+      margin-right: 15px;
+      text-decoration: none;
+      color: #121212;
+    }
+    .welcome-message{
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+<h1>Welcome to Christmas Shop!🎄</h1>
+
+<!-- 로그인 후 -->
+<div th:if="${session.username != null}">
+  <div class="welcome-message">
+    <span th:text="${session.username + '님 환영합니다!'}"></span>
+  </div>
+  <div class="nav-links">
+    <a href="/products">상품 목록</a>
+    <a th:href="@{/cart(username=${session.username})}">장바구니</a>
+    <a th:href="@{/orders(username=${session.username})}">주문 목록</a>
+  </div>
+</div>
+
+<!-- 로그인 전 -->
+<div th:unless="${session.username != null}">
+  <div class="nav-links">
+    <a href="/login">로그인</a>
+    <a href="/signup">회원가입</a>
+    <a href="/products">상품 목록</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>주문 목록</title>
+  <style>
+    .order-item {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #4CAF50;
+    }
+  </style>
+</head>
+<body>
+<h1>주문 목록</h1>
+
+<div th:if="${orders.isEmpty()}">
+  주문 내역이 없습니다.
+</div>
+
+<div th:each="order : ${orders}" class="order-item">
+  상품: <span th:text="${order.product.name}"></span><br>
+  수량: <span th:text="${order.quantity}"></span>개<br>
+  총 가격: <span th:text="${order.totalPrice}"></span>원<br>
+  주문시간: <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></span>
+  <hr>
+</div>
+
+<div>
+  <a href="/">홈으로 돌아가기</a>
+</div>
+</body>
+</html>
